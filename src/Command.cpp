@@ -70,8 +70,13 @@ bool MoveTo::done(){
 }
 
 
-Intercept::Intercept(Entity381* ent, Ogre::Vector3 location){
+Intercept::Intercept(Entity381* ent, Entity381* targetEnt){
+	entity = ent;
+	targetEntity = targetEnt;
+	diff = targetEntity->position - entity->position;
+	relVel = targetEntity->speed - entity->speed;
 
+	init();
 }
 
 Intercept::~Intercept(){
@@ -79,11 +84,22 @@ Intercept::~Intercept(){
 }
 
 void Intercept::init(){
+	Ogre::Radian temp = Ogre::Math::ATan2(diff.y, diff.x) * 180/ 3.1415926;
+	entity->desiredHeading = temp.valueRadians();
+	entity->desiredSpeed = entity->maxSpeed;
 
+	t = diff / relVel;
 }
 
 void Intercept::tick(float dt){
+	predictedLocation = targetEntity->position + targetEntity->speed * t;
 
+	MOVE_DISTANCE_THRESHOLD = predictedLocation.squaredDistance(entity->position);
+
+	if(MOVE_DISTANCE_THRESHOLD < 100)
+	{
+		entity->desiredSpeed = 0;
+	}
 }
 
 bool Intercept::done(){

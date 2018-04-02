@@ -46,7 +46,7 @@ void InputMgr::Init(){
 	  #elif defined OIS_LINUX_PLATFORM
 	  	  pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
 	  	  pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
-	  	  pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
+	  	  //pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
 	  	  pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
 	  #endif
 	  mInputMgr = OIS::InputManager::createInputSystem(pl);
@@ -132,30 +132,56 @@ void InputMgr::UpdateMouse(float dt)
 		Ogre::Ray mouseRay = engine->gfxMgr->mCamera->getCameraToViewportRay(offsetX, offsetY);
 
 		std::pair<bool, float> result = mouseRay.intersects(engine->gameMgr->mPlane);
+		Ogre::Vector3 point = mouseRay.getPoint(result.second);
 
-		if(result.first)
+		if(returnClosestEntity(point))
 		{
-			Ogre::Vector3 point = mouseRay.getPoint(result.second);
-			if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+			if(result.first)
 			{
+				Ogre::Vector3 point = mouseRay.getPoint(result.second);
+				if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+				{
 
-				for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
-				{
-					MoveTo temp(engine->entityMgr->selectedEntity[i], point);
-					engine->entityMgr->selectedEntity[i]->aspects[2]->AddCommand(&temp);
+					for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+					{
+						Intercept temp(engine->entityMgr->selectedEntity[i], returnClosestEntity(point));
+						engine->entityMgr->selectedEntity[i]->aspects[2]->AddCommand(&temp);
+					}
 				}
-			}
-			else
-			{
-				for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+				else
 				{
-					MoveTo temp(engine->entityMgr->selectedEntity[i], point);
-					engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(&temp);
+					for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+					{
+						Intercept temp(engine->entityMgr->selectedEntity[i], returnClosestEntity(point));
+						engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(&temp);
+					}
 				}
 			}
 		}
+		else
+		{
+			if(result.first)
+			{
+				Ogre::Vector3 point = mouseRay.getPoint(result.second);
+				if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+				{
 
-
+					for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+					{
+						MoveTo temp(engine->entityMgr->selectedEntity[i], point);
+						engine->entityMgr->selectedEntity[i]->aspects[2]->AddCommand(&temp);
+					}
+				}
+				else
+				{
+					for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+					{
+						MoveTo temp(engine->entityMgr->selectedEntity[i], point);
+						engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(&temp);
+					}
+				}
+			}
+		}
 	}
 	else
 	{
@@ -163,6 +189,7 @@ void InputMgr::UpdateMouse(float dt)
 	}
 
 }
+
 void InputMgr::selectClosestEntity(Ogre::Vector3 location)
 {
 
@@ -170,13 +197,10 @@ void InputMgr::selectClosestEntity(Ogre::Vector3 location)
 	Entity381* closest;
 	for(size_t i = 0; i < engine->entityMgr->entities.size(); i++)
 	{
-		Ogre::LogManager::getSingletonPtr()->logMessage("For loop");
 		if(location.distance(engine->entityMgr->entities[i]->position) < maxDistance)
 		{
-			Ogre::LogManager::getSingletonPtr()->logMessage("Inside If statement");
 			maxDistance = location.distance(engine->entityMgr->entities[i]->position);
 			closest = engine->entityMgr->entities[i];
-			Ogre::LogManager::getSingletonPtr()->logMessage("after if statement shit");
 		}
 	}
 	if(closest)
@@ -198,11 +222,51 @@ void InputMgr::selectClosestEntity(Ogre::Vector3 location)
 	}
 }
 
+Entity381* InputMgr::returnClosestEntity(Ogre::Vector3 location)
+{
+
+	float maxDistance = 1000;
+	Entity381* closest;
+	for(size_t i = 0; i < engine->entityMgr->entities.size(); i++)
+	{
+		if(location.distance(engine->entityMgr->entities[i]->position) < maxDistance)
+		{
+			maxDistance = location.distance(engine->entityMgr->entities[i]->position);
+			closest = engine->entityMgr->entities[i];
+		}
+	}
+	/*if(closest)
+	{
+		if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+		{
+			if(!closest->isSelected)
+				return closest;
+		}
+		/*else
+		{
+			for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i++)
+			{
+				engine->entityMgr->selectedEntity.pop_back();
+			}
+			engine->entityMgr->selectedEntity.push_back(closest);
+		}
+
+	}*/
+	return closest;
+}
+
 void InputMgr::UpdateCamera(float dt){
 	float move = 400.0f;
 	float rotate = 0.1f;
 
 	 Ogre::Vector3 dirVec = Ogre::Vector3::ZERO;
+	 if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+	 {
+		 move = 600.0f;
+	 	 rotate = .4f;
+	 }
+	 else
+		 move = 400.0f;
 
 	  if (mKeyboard->isKeyDown(OIS::KC_W))
 	    dirVec.z -= move;
@@ -210,27 +274,29 @@ void InputMgr::UpdateCamera(float dt){
 	  if (mKeyboard->isKeyDown(OIS::KC_S))
 	    dirVec.z += move;
 
-	  if (mKeyboard->isKeyDown(OIS::KC_E))
+	  if (mKeyboard->isKeyDown(OIS::KC_R))
 	    dirVec.y += move;
 
 	  if (mKeyboard->isKeyDown(OIS::KC_F))
 	    dirVec.y -= move;
 
+	  if (mKeyboard->isKeyDown(OIS::KC_Z))
+		  engine->gameMgr->cameraNode->yaw(Ogre::Degree(5 * rotate));
+
+	  if (mKeyboard->isKeyDown(OIS::KC_X))
+		  engine->gameMgr->cameraNode->yaw(Ogre::Degree(-5 * rotate));
+
+	  if (mKeyboard->isKeyDown(OIS::KC_Q))
+	  	  engine->gameMgr->cameraNode->pitch(Ogre::Degree(5 * rotate));
+
+	  if (mKeyboard->isKeyDown(OIS::KC_E))
+	  	  engine->gameMgr->cameraNode->pitch(Ogre::Degree(-5 * rotate));
+
 	  if (mKeyboard->isKeyDown(OIS::KC_A))
-	  {
-	    if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
-		      engine->gameMgr->cameraNode->yaw(Ogre::Degree(5 * rotate));
-	    else
 	      dirVec.x -= move;
-	  }
 
 	  if (mKeyboard->isKeyDown(OIS::KC_D))
-	  {
-	    if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
-	      engine->gameMgr->cameraNode->yaw(Ogre::Degree(-5 * rotate));
-	    else
 	      dirVec.x += move;
-	  }
 
 	  engine->gameMgr->cameraNode->translate(dirVec * dt, Ogre::Node::TS_LOCAL);
 }
