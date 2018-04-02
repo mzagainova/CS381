@@ -28,7 +28,14 @@ void Physics2D::Tick(float dt){
 	}
 	entity->speed = Clamp(entity->minSpeed, entity->maxSpeed, entity->speed);
 
-	//When I try to go from a heading of 350 to a heading of 10,
+	if(entity->desiredAltitude > entity->altitude){
+		entity->altitude += entity->climbRate * dt;
+	} else if (entity->desiredAltitude < entity->altitude){
+		entity->altitude -= entity->climbRate * dt;
+	}
+	entity->altitude = Clamp(entity->minAltitude, entity->maxAltitude, entity->altitude);
+
+	//close but no cigar. When I try to go from a heading of 350 to a heading of 10,
 	//I should turn to right/starboard not keep decreasing heading till I get to 10 because it is 20 degrees from -10 (350) to +10 by turning to port/right and
 	//340 degrees from 350 (-10) to 10 by turning left/port
 
@@ -47,10 +54,11 @@ void Physics2D::Tick(float dt){
 	entity->heading = FixAngle(entity->heading);
 
 	//Now do the trig
-	entity->velocity.y = 0.0f; // just to be safe, we do not want ships in the air.
+	entity->velocity.y = 0.0; // just to be safe, we do not want ships in the air.
 	entity->velocity.x = Ogre::Math::Cos(Ogre::Degree(entity->heading)) * entity->speed; //adjacent/hyp
 	entity->velocity.z = Ogre::Math::Sin(Ogre::Degree(entity->heading)) * entity->speed; //opposite/hyp
 
 	//This does not change!
 	entity->position = entity->position + entity->velocity * dt;
+	entity->position.y = entity->altitude;
 }

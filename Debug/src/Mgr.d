@@ -1,6 +1,6 @@
-src/Mgr.o: ../src/Mgr.cpp /home/mzagainova/workspace/PA05_b/inc/Engine.h \
- /home/mzagainova/workspace/PA05_b/inc/Mgr.h
+src/Mgr.o: ../src/Mgr.cpp /home/kc/git-repos/CS381/inc/Engine.h \
+ /home/kc/git-repos/CS381/inc/Mgr.h
 
-/home/mzagainova/workspace/PA05_b/inc/Engine.h:
+/home/kc/git-repos/CS381/inc/Engine.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Mgr.h:
+/home/kc/git-repos/CS381/inc/Mgr.h:

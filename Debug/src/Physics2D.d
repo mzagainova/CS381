@@ -1,6 +1,6 @@
 src/Physics2D.o: ../src/Physics2D.cpp \
- /home/mzagainova/workspace/PA05_b/inc/Physics2D.h \
- /home/mzagainova/workspace/PA05_b/inc/Aspect.h \
+ /home/kc/git-repos/CS381/inc/Physics2D.h \
+ /home/kc/git-repos/CS381/inc/Aspect.h \
  /usr/local/include/OGRE/OgreVector3.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
@@ -15,7 +15,8 @@ src/Physics2D.o: ../src/Physics2D.cpp \
  /usr/local/include/OGRE/OgreMemoryNedPooling.h \
  /usr/local/include/OGRE/OgreMath.h \
  /usr/local/include/OGRE/OgreQuaternion.h \
- /home/mzagainova/workspace/PA05_b/inc/Entity381.h \
+ /home/kc/git-repos/CS381/inc/Command.h \
+ /home/kc/git-repos/CS381/inc/Entity381.h \
  /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgreCommon.h \
  /usr/local/include/OGRE/OgreString.h \
@@ -125,13 +126,12 @@ src/Physics2D.o: ../src/Physics2D.cpp \
  /usr/local/include/OGRE/OgreFrameListener.h \
  /usr/local/include/OGRE/OgreConfigOptionMap.h \
  /usr/local/include/OGRE/OgreNameGenerator.h \
- /home/mzagainova/workspace/PA05_b/inc/Types381.h \
- /home/mzagainova/workspace/PA05_b/inc/Engine.h \
- /home/mzagainova/workspace/PA05_b/inc/Utils.h
+ /home/kc/git-repos/CS381/inc/Engine.h \
+ /home/kc/git-repos/CS381/inc/Utils.h
 
-/home/mzagainova/workspace/PA05_b/inc/Physics2D.h:
+/home/kc/git-repos/CS381/inc/Physics2D.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Aspect.h:
+/home/kc/git-repos/CS381/inc/Aspect.h:
 
 /usr/local/include/OGRE/OgreVector3.h:
 
@@ -161,7 +161,9 @@ src/Physics2D.o: ../src/Physics2D.cpp \
 
 /usr/local/include/OGRE/OgreQuaternion.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Entity381.h:
+/home/kc/git-repos/CS381/inc/Command.h:
+
+/home/kc/git-repos/CS381/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -383,8 +385,6 @@ src/Physics2D.o: ../src/Physics2D.cpp \
 
 /usr/local/include/OGRE/OgreNameGenerator.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Types381.h:
+/home/kc/git-repos/CS381/inc/Engine.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Engine.h:
-
-/home/mzagainova/workspace/PA05_b/inc/Utils.h:
+/home/kc/git-repos/CS381/inc/Utils.h:

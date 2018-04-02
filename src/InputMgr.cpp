@@ -4,17 +4,17 @@
  *  Created on: Mar 4, 2018
  *      Author: sushil
  */
-#include<cfloat>
 
 #include <Engine.h>
 #include <GfxMgr.h>
 #include <InputMgr.h>
 #include <EntityMgr.h>
 #include <GameMgr.h>
+#include "Aspect.h"
 
 #include <Utils.h>
 
-InputMgr::InputMgr(Engine *engine) : Mgr(engine), OIS::KeyListener(), OIS::MouseListener() {
+InputMgr::InputMgr(Engine *engine) : Mgr(engine) {
 
 	this->mInputMgr = 0;
 	this->mKeyboard = 0;
@@ -22,8 +22,6 @@ InputMgr::InputMgr(Engine *engine) : Mgr(engine), OIS::KeyListener(), OIS::Mouse
 	this->keyboardTimer = keyTime;
 	deltaDesiredSpeed = 10.0f;
 	deltaDesiredHeading = 10.0f;
-	deltaDesiredAltitude = 20;
-	this->selectionDistanceSquaredThreshold = 10000;
 }
 
 InputMgr::~InputMgr() {
@@ -39,25 +37,24 @@ void InputMgr::Init(){
 	  engine->gfxMgr->mWindow->getCustomAttribute("WINDOW", &windowHandle);
 	  windowHandleStr << windowHandle;
 	  pl.insert(std::make_pair(std::string("WINDOW"), windowHandleStr.str()));
-	  // insert the following lines right before calling mInputSystem = OIS::InputManager::createInputSystem( paramList );
-		#if defined OIS_WIN32_PLATFORM
-		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
-		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
-		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
-		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
-		#elif defined OIS_LINUX_PLATFORM
-		pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
-		pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
-		pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
-		pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
-		#endif
 
+	  #if defined OIS_WIN32_PLATFORM
+	  	  pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
+	  	  pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
+	  	  pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
+	  	  pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
+	  #elif defined OIS_LINUX_PLATFORM
+	  	  pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
+	  	  pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
+	  	  pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
+	  	  pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
+	  #endif
 	  mInputMgr = OIS::InputManager::createInputSystem(pl);
 
 	  mKeyboard = static_cast<OIS::Keyboard*>(
-	    mInputMgr->createInputObject(OIS::OISKeyboard, true));
+	    mInputMgr->createInputObject(OIS::OISKeyboard, false));
 	  mMouse = static_cast<OIS::Mouse*>(
-	    mInputMgr->createInputObject(OIS::OISMouse, true));
+	    mInputMgr->createInputObject(OIS::OISMouse, false));
 
 	  int left, top;
 	  unsigned int width, height, depth;
@@ -66,6 +63,7 @@ void InputMgr::Init(){
 	  const OIS::MouseState &ms = mMouse->getMouseState();
 	  ms.width = width;
 	  ms.height = height;
+
 	  mMouse->setEventCallback(this);
 	  mKeyboard->setEventCallback(this);
 
@@ -84,17 +82,120 @@ void InputMgr::Stop(){
 }
 
 void InputMgr::Tick(float dt){
-
+	//Must capture both every tick for buffered input to work
+	mMouse->capture();
 	mKeyboard->capture();
 	if(mKeyboard->isKeyDown(OIS::KC_ESCAPE)){
 		engine->keepRunning = false;
 	}
-	mMouse->capture();
+
 //	mTrayMgr->frameRenderingQueued(fe);
 
 	UpdateCamera(dt);
 	UpdateVelocityAndSelection(dt);
+	UpdateMouse(dt);
+}
 
+void InputMgr::UpdateMouse(float dt)
+{
+	static bool left_down;
+
+	if(mMouse->getMouseState().buttonDown(OIS::MB_Left))
+	{
+		left_down = true;
+		Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
+		Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
+		OIS::MouseState arg = mMouse->getMouseState();
+
+		Ogre::Real offsetX = arg.X.abs / screenWidth;
+		Ogre::Real offsetY = arg.Y.abs / screenHeight;
+
+		Ogre::Ray mouseRay = engine->gfxMgr->mCamera->getCameraToViewportRay(offsetX, offsetY);
+
+		std::pair<bool, float> result = mouseRay.intersects(engine->gameMgr->mPlane);
+
+		if(result.first)
+		{
+			Ogre::Vector3 point = mouseRay.getPoint(result.second);
+			selectClosestEntity(point);
+		}
+	}
+	if(mMouse->getMouseState().buttonDown(OIS::MB_Right))
+	{
+		Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
+		Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
+		OIS::MouseState arg = mMouse->getMouseState();
+
+		Ogre::Real offsetX = arg.X.abs / screenWidth;
+		Ogre::Real offsetY = arg.Y.abs / screenHeight;
+
+		Ogre::Ray mouseRay = engine->gfxMgr->mCamera->getCameraToViewportRay(offsetX, offsetY);
+
+		std::pair<bool, float> result = mouseRay.intersects(engine->gameMgr->mPlane);
+
+		if(result.first)
+		{
+			Ogre::Vector3 point = mouseRay.getPoint(result.second);
+			if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+			{
+
+				for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+				{
+					MoveTo temp(engine->entityMgr->selectedEntity[i], point);
+					engine->entityMgr->selectedEntity[i]->aspects[2]->AddCommand(&temp);
+				}
+			}
+			else
+			{
+				for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+				{
+					MoveTo temp(engine->entityMgr->selectedEntity[i], point);
+					engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(&temp);
+				}
+			}
+		}
+
+
+	}
+	else
+	{
+		left_down = false;
+	}
+
+}
+void InputMgr::selectClosestEntity(Ogre::Vector3 location)
+{
+
+	float maxDistance = 1000;
+	Entity381* closest;
+	for(size_t i = 0; i < engine->entityMgr->entities.size(); i++)
+	{
+		Ogre::LogManager::getSingletonPtr()->logMessage("For loop");
+		if(location.distance(engine->entityMgr->entities[i]->position) < maxDistance)
+		{
+			Ogre::LogManager::getSingletonPtr()->logMessage("Inside If statement");
+			maxDistance = location.distance(engine->entityMgr->entities[i]->position);
+			closest = engine->entityMgr->entities[i];
+			Ogre::LogManager::getSingletonPtr()->logMessage("after if statement shit");
+		}
+	}
+	if(closest)
+	{
+		if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+		{
+			if(!closest->isSelected)
+				engine->entityMgr->selectedEntity.push_back(closest);
+		}
+		else
+		{
+			for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i++)
+			{
+				engine->entityMgr->selectedEntity.pop_back();
+			}
+			engine->entityMgr->selectedEntity.push_back(closest);
+		}
+
+	}
 }
 
 void InputMgr::UpdateCamera(float dt){
@@ -133,60 +234,79 @@ void InputMgr::UpdateCamera(float dt){
 
 	  engine->gameMgr->cameraNode->translate(dirVec * dt, Ogre::Node::TS_LOCAL);
 }
-
 void InputMgr::UpdateVelocityAndSelection(float dt){
-	keyboardTimer -= dt;
+	static bool tab_down_last_frame;
+	float deltaDesiredSpeed = 200.0;
+	float deltaDesiredHeading = 50.0;
 
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD8)){
-		keyboardTimer = keyTime;
-		engine->entityMgr->selectedEntity->desiredSpeed += deltaDesiredSpeed;
+	if(mKeyboard->isKeyDown(OIS::KC_NUMPAD8)){
+		for(int i = 0; i < (int)engine->entityMgr->selectedEntity.size(); i++)
+		{
+			engine->entityMgr->selectedEntity[i]->desiredSpeed += deltaDesiredSpeed * dt;
+		}
+
 	}
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD2)){
-		keyboardTimer = keyTime;
-		engine->entityMgr->selectedEntity->desiredSpeed -= deltaDesiredSpeed;
-	}
-
-
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD9)){
-		keyboardTimer = keyTime;
-		if(engine->entityMgr->selectedFlyingEntity != 0){
-			engine->entityMgr->selectedFlyingEntity->desiredAltitude += deltaDesiredAltitude;
+	if(mKeyboard->isKeyDown(OIS::KC_NUMPAD2)){
+		for(int i = 0; i < (int)engine->entityMgr->selectedEntity.size(); i++)
+		{
+			engine->entityMgr->selectedEntity[i]->desiredSpeed -= deltaDesiredSpeed * dt;
 		}
 	}
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD3)){
-		keyboardTimer = keyTime;
-		if(engine->entityMgr->selectedFlyingEntity != 0)
-			engine->entityMgr->selectedFlyingEntity->desiredAltitude -= deltaDesiredAltitude;
-	}
-
-
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD4)){
-		keyboardTimer = keyTime;
-		engine->entityMgr->selectedEntity->desiredHeading -= deltaDesiredHeading;
+	if(mKeyboard->isKeyDown(OIS::KC_NUMPAD4)){
+		for(int i = 0; i < (int)engine->entityMgr->selectedEntity.size(); i++)
+		{
+			engine->entityMgr->selectedEntity[i]->desiredHeading -= deltaDesiredHeading * dt;
+		}
 	//turn left is decreasing degrees, turn right is increasing degrees because increasing degrees gives us the +ive Z axis
 	}
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD6)){
-		keyboardTimer = keyTime;
-		engine->entityMgr->selectedEntity->desiredHeading += deltaDesiredHeading;
+	if(mKeyboard->isKeyDown(OIS::KC_NUMPAD6)){
+		for(int i = 0; i < (int)engine->entityMgr->selectedEntity.size(); i++)
+		{
+			engine->entityMgr->selectedEntity[i]->desiredHeading += deltaDesiredHeading * dt;
+		}
 	}
-	engine->entityMgr->selectedEntity->desiredHeading = FixAngle(engine->entityMgr->selectedEntity->desiredHeading);
 
+	if(mKeyboard->isKeyDown(OIS::KC_NUMPAD9)){
+		for(int i = 0; i < (int)engine->entityMgr->selectedEntity.size(); i++)
+		{
+			engine->entityMgr->selectedEntity[i]->desiredAltitude += deltaDesiredSpeed * dt;
+		}
+	}
 
+	if(mKeyboard->isKeyDown(OIS::KC_NUMPAD3)){
+		for(int i = 0; i < (int)engine->entityMgr->selectedEntity.size(); i++)
+		{
+			engine->entityMgr->selectedEntity[i]->desiredAltitude -= deltaDesiredSpeed * dt;
+		}
+	}
 
+	for(int i = 0; i < (int)engine->entityMgr->selectedEntity.size(); i++)
+	{
+		engine->entityMgr->selectedEntity[i]->desiredHeading = FixAngle(engine->entityMgr->selectedEntity[i]->desiredHeading);
+	}
 
 	//Set velocity to zero....
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_SPACE)){
-		keyboardTimer = keyTime;
-		engine->entityMgr->selectedEntity->velocity = Ogre::Vector3::ZERO;
-		engine->entityMgr->selectedEntity->desiredSpeed = engine->entityMgr->selectedEntity->speed = 0;
-		engine->entityMgr->selectedEntity->desiredHeading = engine->entityMgr->selectedEntity->heading;
+	if(mKeyboard->isKeyDown(OIS::KC_SPACE)){
+		for(int i = 0; i < (int)engine->entityMgr->selectedEntity.size(); i++)
+		{
+			engine->entityMgr->selectedEntity[i]->velocity = Ogre::Vector3::ZERO;
+			engine->entityMgr->selectedEntity[i]->desiredSpeed = engine->entityMgr->selectedEntity[i]->speed = 0;
+			engine->entityMgr->selectedEntity[i]->desiredHeading = engine->entityMgr->selectedEntity[i]->heading;
+
+		}
 	}
 
 	//tab handling
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_TAB)){
-		keyboardTimer = keyTime;
-		engine->entityMgr->SelectNextEntity();
+	if(mKeyboard->isKeyDown(OIS::KC_TAB)){
+		if(!tab_down_last_frame)
+			engine->entityMgr->SelectNextEntity();
+		tab_down_last_frame = true;
 	}
+	else
+	{
+		tab_down_last_frame = false;
+	}
+
 }
 
 void InputMgr::LoadLevel(){
@@ -206,40 +326,9 @@ bool InputMgr::mouseMoved(const OIS::MouseEvent& me){
 }
 
 bool InputMgr::mousePressed(const OIS::MouseEvent& me, OIS::MouseButtonID mid){
-	std::cout << "Mouse pressed" << std::endl;
-	if(OIS::MB_Left == mid){
-		std::cout << "Left mouse press" << std::endl;
-		HandleMouseSelection(me);
-	}
-
 	return true;
 }
 
 bool InputMgr::mouseReleased(const OIS::MouseEvent& me, OIS::MouseButtonID mid){
 	return true;
 }
-
-//check if ms.width and ms.height need to be adjusted when things change
-void InputMgr::HandleMouseSelection(const OIS::MouseEvent &me){
-	const OIS::MouseState &ms = mMouse->getMouseState();
-	int index = -1;
-	Ogre::Ray mouseRay = engine->gfxMgr->mCamera->getCameraToViewportRay(ms.X.abs/(float) ms.width, ms.Y.abs/(float)ms.height);
-	std::pair<bool, float> result = mouseRay.intersects(engine->gfxMgr->oceanSurface);
-	if(result.first){
-		Ogre::Vector3 posUnderMouse = mouseRay.getPoint(result.second);
-		float minDistanceSquared = FLT_MAX;
-		float distanceSquared; //because squareroot is expensive
-		for(unsigned int i = 0; i < engine->entityMgr->entities.size(); i++){
-			distanceSquared = posUnderMouse.squaredDistance(engine->entityMgr->entities[i]->position);
-			if (distanceSquared < selectionDistanceSquaredThreshold){
-				if (distanceSquared < minDistanceSquared){
-					index = i;
-					minDistanceSquared = distanceSquared;
-				}
-			}
-		}
-		engine->entityMgr->Select(index);
-	}
-}
-
-

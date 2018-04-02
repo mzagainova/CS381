@@ -24,6 +24,8 @@ public:
 
 	Ogre::SceneNode *cameraNode;
 
+	Ogre::Plane mPlane;
+
 };
 
 #endif /* GAMEMGR_H_ */

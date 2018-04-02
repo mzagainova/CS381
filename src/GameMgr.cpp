@@ -16,9 +16,10 @@
 
 #include <OgreOverlay.h>
 #include <OgreSceneNode.h>
+#include <OgreMeshManager.h>
 
 
-GameMgr::GameMgr(Engine *engine): Mgr(engine) {
+GameMgr::GameMgr(Engine *engine): Mgr(engine), mPlane(Ogre::Vector3::UNIT_Y, 0) {
 	cameraNode = 0;
 }
 
@@ -38,26 +39,27 @@ void GameMgr::LoadLevel(){
 	  Ogre::Light* light = engine->gfxMgr->mSceneMgr->createLight("MainLight");
 	  light->setPosition(20.0, 80.0, 50.0);
 
-	  // a fixed point in the ocean so you can see relative motion
-
-	  Ogre::Entity* ogreEntityFixed = engine->gfxMgr->mSceneMgr->createEntity("robot.mesh");
-	  Ogre::SceneNode* sceneNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 100, -200));
-	  sceneNode->attachObject(ogreEntityFixed);
-	  sceneNode->showBoundingBox(true);
-
 	  // A node to attach the camera to so we can move the camera node instead of the camera.
 	  cameraNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	  cameraNode->setPosition(0, 200, 500);
 	  cameraNode->attachObject(engine->gfxMgr->mCamera);
 
-	  engine->gfxMgr->MakeGround();
-	  engine->gfxMgr->MakeSky();
+	  MakeGround();
+	  MakeSky();
 	  MakeEntities();
 }
 
 void GameMgr::MakeEntities(){
-	Ogre::Vector3 pos = Ogre::Vector3(-1000, 0, 0);
-	engine->entityMgr->CreateEntityOfTypeAtPosition(DDG51Type, pos);
+	Ogre::Vector3 pos = Ogre::Vector3(-1000, 50, 0);
+
+	for(int i = 0; i < 5; i++)
+	{
+		engine->entityMgr->CreateEntityOfTypeAtPosition(BansheeType, pos);
+		pos.x += 500;
+	}
+
+
+	/*engine->entityMgr->CreateEntityOfTypeAtPosition(DDG51Type, pos);
 	pos.x += 500;
 	engine->entityMgr->CreateEntityOfTypeAtPosition(CarrierType, pos);
 	pos.x += 500;
@@ -65,11 +67,32 @@ void GameMgr::MakeEntities(){
 	pos.x += 500;
 	engine->entityMgr->CreateEntityOfTypeAtPosition(FrigateType, pos);
 	pos.x += 500;
-	engine->entityMgr->CreateEntityOfTypeAtPosition(AlienType, pos);
-
-	pos.x = 0;
-	engine->entityMgr->CreateEntityOfTypeAtPosition(BansheeType, pos);
+	engine->entityMgr->CreateEntityOfTypeAtPosition(AlienType, pos);*/
 
 	engine->entityMgr->SelectNextEntity(); //sets selection
 }
 
+void GameMgr::MakeGround(){
+
+
+	  Ogre::MeshManager::getSingleton().createPlane(
+	    "ground",
+	    Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+	    mPlane,
+	    15000, 15000, 20, 20,
+	    true,
+	    1, 5, 5,
+	    Ogre::Vector3::UNIT_Z);
+
+	  Ogre::Entity* groundEntity = engine->gfxMgr->mSceneMgr->createEntity("ground");
+	  engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(groundEntity);
+	  groundEntity->setCastShadows(false);
+	  //groundEntity->setMaterialName("Ocean2_HLSL_GLSL");
+	  //groundEntity->setMaterialName("OceanHLSL_GLSL");
+	  groundEntity->setMaterialName("Ocean2_Cg");
+	  //groundEntity->setMaterialName("NavyCg");
+}
+
+void GameMgr::MakeSky(){
+	engine->gfxMgr->mSceneMgr->setSkyBox(true, "Examples/MorningSkyBox");
+}

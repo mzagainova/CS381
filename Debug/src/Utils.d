@@ -1,4 +1,3 @@
-src/Utils.o: ../src/Utils.cpp \
- /home/mzagainova/workspace/PA05_b/inc/Utils.h
+src/Utils.o: ../src/Utils.cpp /home/kc/git-repos/CS381/inc/Utils.h
 
-/home/mzagainova/workspace/PA05_b/inc/Utils.h:
+/home/kc/git-repos/CS381/inc/Utils.h:

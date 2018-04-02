@@ -1,6 +1,5 @@
 src/Entity381.o: ../src/Entity381.cpp \
- /home/mzagainova/workspace/PA05_b/inc/GfxMgr.h \
- /usr/local/include/OGRE/OgreRoot.h \
+ /home/kc/git-repos/CS381/inc/GfxMgr.h /usr/local/include/OGRE/OgreRoot.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
  /usr/local/include/OGRE/OgreConfig.h \
@@ -121,8 +120,8 @@ src/Entity381.o: ../src/Entity381.cpp \
  /usr/local/include/OGRE/OgreLodStrategy.h \
  /usr/local/include/OGRE/OgreWorkQueue.h \
  /usr/local/include/OGRE/OgreWindowEventUtilities.h \
- /home/mzagainova/workspace/PA05_b/inc/Mgr.h \
- /home/mzagainova/workspace/PA05_b/inc/Entity381.h \
+ /home/kc/git-repos/CS381/inc/Mgr.h \
+ /home/kc/git-repos/CS381/inc/Entity381.h \
  /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgreHardwareBufferManager.h \
  /usr/local/include/OGRE/OgreHardwareCounterBuffer.h \
@@ -130,12 +129,14 @@ src/Entity381.o: ../src/Entity381.cpp \
  /usr/local/include/OGRE/OgreRenderToVertexBuffer.h \
  /usr/local/include/OGRE/OgreSceneManager.h \
  /usr/local/include/OGRE/OgreVector3.h \
- /home/mzagainova/workspace/PA05_b/inc/Aspect.h \
- /home/mzagainova/workspace/PA05_b/inc/Types381.h \
- /home/mzagainova/workspace/PA05_b/inc/Engine.h \
- /home/mzagainova/workspace/PA05_b/inc/Physics2D.h
+ /home/kc/git-repos/CS381/inc/Aspect.h \
+ /home/kc/git-repos/CS381/inc/Command.h \
+ /home/kc/git-repos/CS381/inc/Engine.h \
+ /home/kc/git-repos/CS381/inc/Physics2D.h \
+ /home/kc/git-repos/CS381/inc/FlyingEntity381.h \
+ /home/kc/git-repos/CS381/inc/UnitAI.h
 
-/home/mzagainova/workspace/PA05_b/inc/GfxMgr.h:
+/home/kc/git-repos/CS381/inc/GfxMgr.h:
 
 /usr/local/include/OGRE/OgreRoot.h:
 
@@ -385,9 +386,9 @@ src/Entity381.o: ../src/Entity381.cpp \
 
 /usr/local/include/OGRE/OgreWindowEventUtilities.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Mgr.h:
+/home/kc/git-repos/CS381/inc/Mgr.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Entity381.h:
+/home/kc/git-repos/CS381/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -403,10 +404,14 @@ src/Entity381.o: ../src/Entity381.cpp \
 
 /usr/local/include/OGRE/OgreVector3.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Aspect.h:
+/home/kc/git-repos/CS381/inc/Aspect.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Types381.h:
+/home/kc/git-repos/CS381/inc/Command.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Engine.h:
+/home/kc/git-repos/CS381/inc/Engine.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Physics2D.h:
+/home/kc/git-repos/CS381/inc/Physics2D.h:
+
+/home/kc/git-repos/CS381/inc/FlyingEntity381.h:
+
+/home/kc/git-repos/CS381/inc/UnitAI.h:

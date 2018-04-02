@@ -9,7 +9,7 @@
 #include "FlyingEntity381.h"
 
 FlyingEntity381::FlyingEntity381(Engine *engine, Ogre::Vector3 pos, int ident):
-	Entity381(engine, pos, ident) {
+	Entity381(engine, "banshee.mesh", pos, ident) {
 	// TODO Auto-generated constructor stub
 	minAltitude = 0;
 	maxAltitude = 1000;
@@ -28,27 +28,23 @@ FlyingEntity381::~FlyingEntity381() {
 }
 
 
+//-------------------------------------------------------------------------------------------------------------------------------
 Banshee::Banshee(Engine *engine, Ogre::Vector3 pos, int ident):
-		FlyingEntity381(engine, pos, ident) {
-	// TODO Auto-generated constructor stub
-	meshfilename = "cube.mesh";
-	entityType = BansheeType;
-
-	acceleration = 10.0f;
-	turnRate = 10.0f;
-
-	minSpeed = 0;
-	maxSpeed = 100;
-
-	climbRate = 20;
-	altitude = 20;
-	desiredAltitude = 20;
-	this->position.y = 20;
-	maxAltitude = 1000;
-	minAltitude = 10;
+		FlyingEntity381(engine, pos, ident){
+	meshfilename = "banshee.mesh";
+	this->minSpeed = 0;
+	this->maxSpeed = 16.0f;//meters per second...
+	this->minAltitude = 10;
+	this->maxAltitude = 500;
+	this->climbRate = 50;
+	this->acceleration = 5.0f; // fast
+	this->turnRate = 20.0f; //4 degrees per second
+	this->altitude = pos.y;
+	this->desiredAltitude = altitude;
+	std::cout << "Created: " << this->name << std::endl;
 }
 
-Banshee::~Banshee() {
-	// TODO Auto-generated destructor stub
+Banshee::~Banshee(){
+
 }
 

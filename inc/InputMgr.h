@@ -12,6 +12,7 @@
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
 #include <OISMouse.h>
+#include <OgreRay.h>
 
 #  include <SdkTrays.h>
 #  include <SdkCameraMan.h>
@@ -22,8 +23,7 @@ class Engine;
 class InputMgr:
 		public Mgr,
 		public OIS::KeyListener,
-		public OIS::MouseListener{
-		//public Ogre::WindowEventListener {
+		public OIS::MouseListener {
 
 public:
 	InputMgr(Engine *engine);
@@ -40,8 +40,6 @@ public:
 	OIS::Keyboard* mKeyboard;
 	OIS::Mouse* mMouse;
 
-
-
 	void Init();
 	void Stop();
 	void Tick(float dt);
@@ -49,12 +47,11 @@ public:
 
 	float keyboardTimer;
 	const static float keyTime = 0.1f;
-	float deltaDesiredSpeed, deltaDesiredHeading, deltaDesiredAltitude;
+	float deltaDesiredSpeed, deltaDesiredHeading;
 	void UpdateCamera(float dt);
 	void UpdateVelocityAndSelection(float dt);
-
-	void HandleMouseSelection(const OIS::MouseEvent& me);
-	float selectionDistanceSquaredThreshold;
+	void UpdateMouse(float dt);
+	void selectClosestEntity(Ogre::Vector3);
 
 
 };

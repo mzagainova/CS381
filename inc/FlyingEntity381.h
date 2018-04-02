@@ -12,6 +12,8 @@
 #include <OgreVector3.h>
 #include <Engine.h>
 
+class Entity381;
+
 class FlyingEntity381: public Entity381 {
 public:
 	FlyingEntity381(Engine *engine, Ogre::Vector3 pos, int ident);

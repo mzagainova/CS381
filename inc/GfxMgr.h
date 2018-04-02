@@ -31,9 +31,6 @@ public:
 	void Tick(float dt);
 	void Stop();
 
-	void MakeGround();
-	Ogre::Plane oceanSurface;
-	void MakeSky();
 
 	//Ogre related stuff
 	Ogre::Root* mRoot;

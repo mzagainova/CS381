@@ -15,8 +15,6 @@
 #include <OgreRenderWindow.h>
 #include <OgreConfigFile.h>
 #include <OgreException.h>
-#include <OgrePlane.h>
-#include <OgreMeshManager.h>
 
 #include <Engine.h>
 #include <GfxMgr.h>
@@ -29,7 +27,6 @@ GfxMgr::GfxMgr(Engine *engine): Mgr(engine) {
 	mWindow = 0;
 	mSceneMgr = 0;
 	mCamera = 0;
-	//oceanSurface(Ogre::Vector3::UNIT_Y, 0);
 }
 
 GfxMgr::~GfxMgr() {
@@ -99,38 +96,6 @@ void GfxMgr::Init(){
 
 
 }
-
-
-void GfxMgr::MakeSky(){
-	engine->gfxMgr->mSceneMgr->setSkyBox(true, "Examples/MorningSkyBox");
-}
-
-void GfxMgr::MakeGround(){
-
-	//Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
-	//Ogre::Plane oceanSurface(Ogre::Vector3::UNIT_Y, 0);
-	//oceanSurface = plane;
-	oceanSurface.normal = Ogre::Vector3::UNIT_Y;
-	oceanSurface.d = 0;
-	Ogre::MeshManager::getSingleton().createPlane(
-	    "ocean",
-	    Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-	    //plane,
-		oceanSurface,
-	    15000, 15000, 20, 20,
-	    true,
-	    1, 5, 5,
-	    Ogre::Vector3::UNIT_Z);
-
-	  Ogre::Entity* groundEntity = engine->gfxMgr->mSceneMgr->createEntity("ocean");
-	  engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(groundEntity);
-	  groundEntity->setCastShadows(false);
-	  //groundEntity->setMaterialName("Ocean2_HLSL_GLSL");
-	  //groundEntity->setMaterialName("OceanHLSL_GLSL");
-	  groundEntity->setMaterialName("Ocean2_Cg");
-	  //groundEntity->setMaterialName("NavyCg");
-}
-
 
 void GfxMgr::windowClosed(Ogre::RenderWindow *rw){
 	mRoot->shutdown();

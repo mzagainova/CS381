@@ -2,8 +2,10 @@
 #define __Aspect_h_
 
 #include<OgreVector3.h>
+#include "Command.h"
 
-class Entity381;    //Forward declaration of the Entity381 class
+class Entity381; //Forward declaration of the Entity381 class
+class Command;
 
 class Aspect
 {
@@ -14,13 +16,13 @@ public:
   Entity381* entity;
 
   virtual void Tick(float dt);
+  void SetCommand(Command *c);
+  void AddCommand(Command *c);
 
 
 protected:
 
 };
-
-
 
 class Renderable : Aspect
 {

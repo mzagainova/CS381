@@ -22,7 +22,14 @@ void Aspect::Tick(float dt){
 }
 
 
+void Aspect::SetCommand(Command *c)
+{
 
+}
+void Aspect::AddCommand(Command *c)
+{
+
+}
 
 Renderable::Renderable(Entity381* ent):Aspect(ent){
 
@@ -35,8 +42,8 @@ Renderable::~Renderable(){
 void Renderable::Tick(float dt){
 //do something;
 	entity->sceneNode->setPosition(entity->position); //now ogre should render the sceneNode at the new position...
-	entity->sceneNode->resetOrientation(); // yaw is cumulative, so set current y-rotation to 0
-	entity->sceneNode->yaw(Ogre::Degree(-entity->heading)); //ogre's yaw is in the direction of -z
+	entity->sceneNode->resetOrientation(); // yaw is relative to 0
+	entity->sceneNode->yaw(Ogre::Degree(-entity->heading));
 	//bounding boxes are rendered so...
 	if(entity->isSelected)
 		entity->sceneNode->showBoundingBox(true);

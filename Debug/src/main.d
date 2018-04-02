@@ -1,4 +1,3 @@
-src/main.o: ../src/main.cpp \
- /home/mzagainova/workspace/PA05_b/inc/Engine.h
+src/main.o: ../src/main.cpp /home/kc/git-repos/CS381/inc/Engine.h
 
-/home/mzagainova/workspace/PA05_b/inc/Engine.h:
+/home/kc/git-repos/CS381/inc/Engine.h:

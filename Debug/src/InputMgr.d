@@ -1,7 +1,5 @@
-src/InputMgr.o: ../src/InputMgr.cpp \
- /home/mzagainova/workspace/PA05_b/inc/Engine.h \
- /home/mzagainova/workspace/PA05_b/inc/GfxMgr.h \
- /usr/local/include/OGRE/OgreRoot.h \
+src/InputMgr.o: ../src/InputMgr.cpp /home/kc/git-repos/CS381/inc/Engine.h \
+ /home/kc/git-repos/CS381/inc/GfxMgr.h /usr/local/include/OGRE/OgreRoot.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
  /usr/local/include/OGRE/OgreConfig.h \
@@ -122,13 +120,13 @@ src/InputMgr.o: ../src/InputMgr.cpp \
  /usr/local/include/OGRE/OgreLodStrategy.h \
  /usr/local/include/OGRE/OgreWorkQueue.h \
  /usr/local/include/OGRE/OgreWindowEventUtilities.h \
- /home/mzagainova/workspace/PA05_b/inc/Mgr.h \
- /home/mzagainova/workspace/PA05_b/inc/InputMgr.h \
- /usr/include/ois/OISEvents.h /usr/include/ois/OISPrereqs.h \
- /usr/include/ois/OISConfig.h /usr/include/ois/OISInputManager.h \
- /usr/include/ois/OISKeyboard.h /usr/include/ois/OISObject.h \
- /usr/include/ois/OISInterface.h /usr/include/ois/OISEvents.h \
- /usr/include/ois/OISMouse.h /usr/local/include/OGRE/SdkTrays.h \
+ /home/kc/git-repos/CS381/inc/Mgr.h \
+ /home/kc/git-repos/CS381/inc/InputMgr.h /usr/include/ois/OISEvents.h \
+ /usr/include/ois/OISPrereqs.h /usr/include/ois/OISConfig.h \
+ /usr/include/ois/OISInputManager.h /usr/include/ois/OISKeyboard.h \
+ /usr/include/ois/OISObject.h /usr/include/ois/OISInterface.h \
+ /usr/include/ois/OISEvents.h /usr/include/ois/OISMouse.h \
+ /usr/local/include/OGRE/OgreRay.h /usr/local/include/OGRE/SdkTrays.h \
  /usr/local/include/OGRE/Ogre.h \
  /usr/local/include/OGRE/OgreArchiveManager.h \
  /usr/local/include/OGRE/OgreBillboardChain.h \
@@ -230,20 +228,20 @@ src/InputMgr.o: ../src/InputMgr.cpp \
  /usr/include/ois/OISException.h /usr/include/ois/OISEffect.h \
  /usr/include/ois/OISForceFeedback.h \
  /usr/local/include/OGRE/SdkCameraMan.h \
- /home/mzagainova/workspace/PA05_b/inc/EntityMgr.h \
- /home/mzagainova/workspace/PA05_b/inc/Entity381.h \
+ /home/kc/git-repos/CS381/inc/EntityMgr.h \
+ /home/kc/git-repos/CS381/inc/Entity381.h \
  /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgreSceneManager.h \
  /usr/local/include/OGRE/OgreVector3.h \
- /home/mzagainova/workspace/PA05_b/inc/Aspect.h \
- /home/mzagainova/workspace/PA05_b/inc/Types381.h \
- /home/mzagainova/workspace/PA05_b/inc/FlyingEntity381.h \
- /home/mzagainova/workspace/PA05_b/inc/GameMgr.h \
- /home/mzagainova/workspace/PA05_b/inc/Utils.h
+ /home/kc/git-repos/CS381/inc/Aspect.h \
+ /home/kc/git-repos/CS381/inc/Command.h \
+ /home/kc/git-repos/CS381/inc/Types381.h \
+ /home/kc/git-repos/CS381/inc/GameMgr.h \
+ /home/kc/git-repos/CS381/inc/Utils.h
 
-/home/mzagainova/workspace/PA05_b/inc/Engine.h:
+/home/kc/git-repos/CS381/inc/Engine.h:
 
-/home/mzagainova/workspace/PA05_b/inc/GfxMgr.h:
+/home/kc/git-repos/CS381/inc/GfxMgr.h:
 
 /usr/local/include/OGRE/OgreRoot.h:
 
@@ -493,9 +491,9 @@ src/InputMgr.o: ../src/InputMgr.cpp \
 
 /usr/local/include/OGRE/OgreWindowEventUtilities.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Mgr.h:
+/home/kc/git-repos/CS381/inc/Mgr.h:
 
-/home/mzagainova/workspace/PA05_b/inc/InputMgr.h:
+/home/kc/git-repos/CS381/inc/InputMgr.h:
 
 /usr/include/ois/OISEvents.h:
 
@@ -514,6 +512,8 @@ src/InputMgr.o: ../src/InputMgr.cpp \
 /usr/include/ois/OISEvents.h:
 
 /usr/include/ois/OISMouse.h:
+
+/usr/local/include/OGRE/OgreRay.h:
 
 /usr/local/include/OGRE/SdkTrays.h:
 
@@ -729,9 +729,9 @@ src/InputMgr.o: ../src/InputMgr.cpp \
 
 /usr/local/include/OGRE/SdkCameraMan.h:
 
-/home/mzagainova/workspace/PA05_b/inc/EntityMgr.h:
+/home/kc/git-repos/CS381/inc/EntityMgr.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Entity381.h:
+/home/kc/git-repos/CS381/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -739,12 +739,12 @@ src/InputMgr.o: ../src/InputMgr.cpp \
 
 /usr/local/include/OGRE/OgreVector3.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Aspect.h:
+/home/kc/git-repos/CS381/inc/Aspect.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Types381.h:
+/home/kc/git-repos/CS381/inc/Command.h:
 
-/home/mzagainova/workspace/PA05_b/inc/FlyingEntity381.h:
+/home/kc/git-repos/CS381/inc/Types381.h:
 
-/home/mzagainova/workspace/PA05_b/inc/GameMgr.h:
+/home/kc/git-repos/CS381/inc/GameMgr.h:
 
-/home/mzagainova/workspace/PA05_b/inc/Utils.h:
+/home/kc/git-repos/CS381/inc/Utils.h:
