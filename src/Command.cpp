@@ -91,9 +91,10 @@ Intercept::~Intercept(){
 }
 
 void Intercept::init(){
-	Ogre::Radian temp = Ogre::Math::ATan2(diff.y, diff.x);
+	Ogre::Radian temp = Ogre::Math::ATan2(diff.z, diff.x) ;
 	entity->desiredHeading = temp.valueDegrees();
 	entity->desiredSpeed = entity->maxSpeed;
+	MOVE_DISTANCE_THRESHOLD = diff.squaredLength();
 
 	t = diff / relVel;
 }
@@ -103,13 +104,17 @@ void Intercept::tick(float dt){
 
 	MOVE_DISTANCE_THRESHOLD = predictedLocation.squaredDistance(entity->position);
 
-	if(MOVE_DISTANCE_THRESHOLD < 100)
+	if(MOVE_DISTANCE_THRESHOLD < 300)
 	{
 		entity->desiredSpeed = 0;
 	}
 }
 
 bool Intercept::done(){
-
+	if(MOVE_DISTANCE_THRESHOLD < 300)
+	{
+		return true;
+	}
+	return false;
 }
 
