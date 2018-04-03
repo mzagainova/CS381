@@ -236,6 +236,7 @@ src/EntityMgr.o: ../src/EntityMgr.cpp \
  /usr/include/ois/OISException.h /usr/include/ois/OISEffect.h \
  /usr/include/ois/OISForceFeedback.h \
  /usr/local/include/OGRE/SdkCameraMan.h \
+ /home/kurtisr/git-repos/CS381/inc/Entity381.h \
  /home/kurtisr/git-repos/CS381/inc/FlyingEntity381.h
 
 /home/kurtisr/git-repos/CS381/inc/Entity381.h:
@@ -737,5 +738,7 @@ src/EntityMgr.o: ../src/EntityMgr.cpp \
 /usr/include/ois/OISForceFeedback.h:
 
 /usr/local/include/OGRE/SdkCameraMan.h:
+
+/home/kurtisr/git-repos/CS381/inc/Entity381.h:
 
 /home/kurtisr/git-repos/CS381/inc/FlyingEntity381.h:

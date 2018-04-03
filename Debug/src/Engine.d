@@ -239,7 +239,8 @@ src/Engine.o: ../src/Engine.cpp \
  /usr/include/ois/OISInputManager.h /usr/include/ois/OISFactoryCreator.h \
  /usr/include/ois/OISException.h /usr/include/ois/OISEffect.h \
  /usr/include/ois/OISForceFeedback.h \
- /usr/local/include/OGRE/SdkCameraMan.h
+ /usr/local/include/OGRE/SdkCameraMan.h \
+ /home/kurtisr/git-repos/CS381/inc/Entity381.h
 
 /home/kurtisr/git-repos/CS381/inc/Engine.h:
 
@@ -748,3 +749,5 @@ src/Engine.o: ../src/Engine.cpp \
 /usr/include/ois/OISForceFeedback.h:
 
 /usr/local/include/OGRE/SdkCameraMan.h:
+
+/home/kurtisr/git-repos/CS381/inc/Entity381.h:

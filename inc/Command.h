@@ -54,7 +54,7 @@ public:
 class Intercept: public Command {
 
 public:
-	Intercept(Entity381* ent, Ogre::Vector3 location);
+	Intercept(Entity381* ent, Entity381* targetEnt);
 	~Intercept();
 
 	void init();
@@ -63,6 +63,9 @@ public:
 
 	Ogre::Vector3 targetLocation;
 	float MOVE_DISTANCE_THRESHOLD;
+	Ogre::Vector3 predictedLocation;
+	Ogre::Vector3 diff, relVel, t;
+	Entity381 *targetEntity;
 
 };
 

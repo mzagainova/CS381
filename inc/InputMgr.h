@@ -17,6 +17,7 @@
 #  include <SdkTrays.h>
 #  include <SdkCameraMan.h>
 #include <Mgr.h>
+#include "Entity381.h"
 
 class Engine;
 
@@ -52,6 +53,7 @@ public:
 	void UpdateVelocityAndSelection(float dt);
 	void UpdateMouse(float dt);
 	void selectClosestEntity(Ogre::Vector3);
+	Entity381* returnClosestEntity(Ogre::Vector3);
 
 
 };

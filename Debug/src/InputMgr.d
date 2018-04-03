@@ -230,13 +230,14 @@ src/InputMgr.o: ../src/InputMgr.cpp \
  /usr/include/ois/OISException.h /usr/include/ois/OISEffect.h \
  /usr/include/ois/OISForceFeedback.h \
  /usr/local/include/OGRE/SdkCameraMan.h \
- /home/kurtisr/git-repos/CS381/inc/EntityMgr.h \
  /home/kurtisr/git-repos/CS381/inc/Entity381.h \
  /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgreSceneManager.h \
  /usr/local/include/OGRE/OgreVector3.h \
  /home/kurtisr/git-repos/CS381/inc/Aspect.h \
  /home/kurtisr/git-repos/CS381/inc/Command.h \
+ /home/kurtisr/git-repos/CS381/inc/Entity381.h \
+ /home/kurtisr/git-repos/CS381/inc/EntityMgr.h \
  /home/kurtisr/git-repos/CS381/inc/Types381.h \
  /home/kurtisr/git-repos/CS381/inc/GameMgr.h \
  /home/kurtisr/git-repos/CS381/inc/Utils.h
@@ -731,8 +732,6 @@ src/InputMgr.o: ../src/InputMgr.cpp \
 
 /usr/local/include/OGRE/SdkCameraMan.h:
 
-/home/kurtisr/git-repos/CS381/inc/EntityMgr.h:
-
 /home/kurtisr/git-repos/CS381/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreEntity.h:
@@ -744,6 +743,10 @@ src/InputMgr.o: ../src/InputMgr.cpp \
 /home/kurtisr/git-repos/CS381/inc/Aspect.h:
 
 /home/kurtisr/git-repos/CS381/inc/Command.h:
+
+/home/kurtisr/git-repos/CS381/inc/Entity381.h:
+
+/home/kurtisr/git-repos/CS381/inc/EntityMgr.h:
 
 /home/kurtisr/git-repos/CS381/inc/Types381.h:
 
