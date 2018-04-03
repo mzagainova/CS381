@@ -1,8 +1,7 @@
-src/GameMgr.o: ../src/GameMgr.cpp \
- /home/kurtisr/git-repos/CS381/inc/Engine.h \
- /home/kurtisr/git-repos/CS381/inc/EntityMgr.h \
- /home/kurtisr/git-repos/CS381/inc/Mgr.h \
- /home/kurtisr/git-repos/CS381/inc/Entity381.h \
+src/GameMgr.o: ../src/GameMgr.cpp /home/kc/git-repos/CS381/inc/Engine.h \
+ /home/kc/git-repos/CS381/inc/EntityMgr.h \
+ /home/kc/git-repos/CS381/inc/Mgr.h \
+ /home/kc/git-repos/CS381/inc/Entity381.h \
  /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
@@ -125,12 +124,11 @@ src/GameMgr.o: ../src/GameMgr.cpp \
  /usr/local/include/OGRE/OgreConfigOptionMap.h \
  /usr/local/include/OGRE/OgreNameGenerator.h \
  /usr/local/include/OGRE/OgreVector3.h \
- /home/kurtisr/git-repos/CS381/inc/Aspect.h \
- /home/kurtisr/git-repos/CS381/inc/Command.h \
- /home/kurtisr/git-repos/CS381/inc/Types381.h \
- /home/kurtisr/git-repos/CS381/inc/GameMgr.h \
- /home/kurtisr/git-repos/CS381/inc/GfxMgr.h \
- /usr/local/include/OGRE/OgreRoot.h \
+ /home/kc/git-repos/CS381/inc/Aspect.h \
+ /home/kc/git-repos/CS381/inc/Command.h \
+ /home/kc/git-repos/CS381/inc/Types381.h \
+ /home/kc/git-repos/CS381/inc/GameMgr.h \
+ /home/kc/git-repos/CS381/inc/GfxMgr.h /usr/local/include/OGRE/OgreRoot.h \
  /usr/local/include/OGRE/OgreSceneManagerEnumerator.h \
  /usr/local/include/OGRE/OgreSceneManager.h \
  /usr/local/include/OGRE/OgreLodStrategyManager.h \
@@ -147,13 +145,13 @@ src/GameMgr.o: ../src/GameMgr.cpp \
  /usr/local/include/OGRE/OgrePatchMesh.h \
  /usr/local/include/OGRE/OgrePatchSurface.h
 
-/home/kurtisr/git-repos/CS381/inc/Engine.h:
+/home/kc/git-repos/CS381/inc/Engine.h:
 
-/home/kurtisr/git-repos/CS381/inc/EntityMgr.h:
+/home/kc/git-repos/CS381/inc/EntityMgr.h:
 
-/home/kurtisr/git-repos/CS381/inc/Mgr.h:
+/home/kc/git-repos/CS381/inc/Mgr.h:
 
-/home/kurtisr/git-repos/CS381/inc/Entity381.h:
+/home/kc/git-repos/CS381/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -403,15 +401,15 @@ src/GameMgr.o: ../src/GameMgr.cpp \
 
 /usr/local/include/OGRE/OgreVector3.h:
 
-/home/kurtisr/git-repos/CS381/inc/Aspect.h:
+/home/kc/git-repos/CS381/inc/Aspect.h:
 
-/home/kurtisr/git-repos/CS381/inc/Command.h:
+/home/kc/git-repos/CS381/inc/Command.h:
 
-/home/kurtisr/git-repos/CS381/inc/Types381.h:
+/home/kc/git-repos/CS381/inc/Types381.h:
 
-/home/kurtisr/git-repos/CS381/inc/GameMgr.h:
+/home/kc/git-repos/CS381/inc/GameMgr.h:
 
-/home/kurtisr/git-repos/CS381/inc/GfxMgr.h:
+/home/kc/git-repos/CS381/inc/GfxMgr.h:
 
 /usr/local/include/OGRE/OgreRoot.h:
 

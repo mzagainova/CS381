@@ -16,13 +16,10 @@ UnitAI::~UnitAI(){
 void UnitAI::Tick(float dt){
 	if(!commands.empty())
 	{
-		std::cerr << "UNIT AI TICK" << std::endl;
-		std::cerr << commands.size() << std::endl;
-		commands.front()->tick(dt);
-		std::cerr << "post UNIT AI TICK" << std::endl;
+		commands[0]->tick(dt);
+		std::cout << commands.size() << std::endl;
 
-
-		if(commands.front()->done())
+		if(commands[0]->done())
 		{
 			delete commands[0];
 			commands.erase(commands.begin());

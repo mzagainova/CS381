@@ -24,10 +24,14 @@ void Command::init(){
 }
 
 void Command::tick(float dt){
+	std:: cout << "Wrong tick function" << std::endl;
+
 
 }
 
 bool Command::done(){
+	std:: cout << "Wrong done function" << std::endl;
+
 	return true;
 }
 
@@ -62,14 +66,16 @@ void MoveTo::tick(float dt){
 
 	std:: cout << MOVE_DISTANCE_THRESHOLD << std::endl;
 
-	if(MOVE_DISTANCE_THRESHOLD < 300)
+	if(MOVE_DISTANCE_THRESHOLD < 3000)
 	{
 		entity->desiredSpeed = 0;
 	}
 }
 
 bool MoveTo::done(){
-	if(MOVE_DISTANCE_THRESHOLD < 300)
+	std:: cout << "Correct done function" << std::endl;
+
+	if(MOVE_DISTANCE_THRESHOLD < 3000)
 	{
 		return true;
 	}
@@ -100,18 +106,24 @@ void Intercept::init(){
 }
 
 void Intercept::tick(float dt){
+	std:: cout << "Wrong tick function" << std::endl;
+
 	predictedLocation = targetEntity->position + targetEntity->speed * t;
+
+	Ogre::Vector3 difference = predictedLocation - entity->position;
+	Ogre::Radian temp = Ogre::Math::ATan2(difference.z, difference.x) ;
+	entity->desiredHeading = temp.valueDegrees();
 
 	MOVE_DISTANCE_THRESHOLD = predictedLocation.squaredDistance(entity->position);
 
-	if(MOVE_DISTANCE_THRESHOLD < 300)
+	if(MOVE_DISTANCE_THRESHOLD < 3000)
 	{
 		entity->desiredSpeed = 0;
 	}
 }
 
 bool Intercept::done(){
-	if(MOVE_DISTANCE_THRESHOLD < 300)
+	if(MOVE_DISTANCE_THRESHOLD < 3000)
 	{
 		return true;
 	}

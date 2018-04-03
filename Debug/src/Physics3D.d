@@ -1,7 +1,7 @@
 src/Physics3D.o: ../src/Physics3D.cpp \
- /home/kurtisr/git-repos/CS381/inc/Physics3D.h \
- /home/kurtisr/git-repos/CS381/inc/FlyingEntity381.h \
- /home/kurtisr/git-repos/CS381/inc/Entity381.h \
+ /home/kc/git-repos/CS381/inc/Physics3D.h \
+ /home/kc/git-repos/CS381/inc/FlyingEntity381.h \
+ /home/kc/git-repos/CS381/inc/Entity381.h \
  /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
@@ -124,17 +124,17 @@ src/Physics3D.o: ../src/Physics3D.cpp \
  /usr/local/include/OGRE/OgreConfigOptionMap.h \
  /usr/local/include/OGRE/OgreNameGenerator.h \
  /usr/local/include/OGRE/OgreVector3.h \
- /home/kurtisr/git-repos/CS381/inc/Aspect.h \
- /home/kurtisr/git-repos/CS381/inc/Command.h \
- /home/kurtisr/git-repos/CS381/inc/Engine.h \
- /home/kurtisr/git-repos/CS381/inc/Physics2D.h \
- /home/kurtisr/git-repos/CS381/inc/Utils.h
+ /home/kc/git-repos/CS381/inc/Aspect.h \
+ /home/kc/git-repos/CS381/inc/Command.h \
+ /home/kc/git-repos/CS381/inc/Engine.h \
+ /home/kc/git-repos/CS381/inc/Physics2D.h \
+ /home/kc/git-repos/CS381/inc/Utils.h
 
-/home/kurtisr/git-repos/CS381/inc/Physics3D.h:
+/home/kc/git-repos/CS381/inc/Physics3D.h:
 
-/home/kurtisr/git-repos/CS381/inc/FlyingEntity381.h:
+/home/kc/git-repos/CS381/inc/FlyingEntity381.h:
 
-/home/kurtisr/git-repos/CS381/inc/Entity381.h:
+/home/kc/git-repos/CS381/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -384,12 +384,12 @@ src/Physics3D.o: ../src/Physics3D.cpp \
 
 /usr/local/include/OGRE/OgreVector3.h:
 
-/home/kurtisr/git-repos/CS381/inc/Aspect.h:
+/home/kc/git-repos/CS381/inc/Aspect.h:
 
-/home/kurtisr/git-repos/CS381/inc/Command.h:
+/home/kc/git-repos/CS381/inc/Command.h:
 
-/home/kurtisr/git-repos/CS381/inc/Engine.h:
+/home/kc/git-repos/CS381/inc/Engine.h:
 
-/home/kurtisr/git-repos/CS381/inc/Physics2D.h:
+/home/kc/git-repos/CS381/inc/Physics2D.h:
 
-/home/kurtisr/git-repos/CS381/inc/Utils.h:
+/home/kc/git-repos/CS381/inc/Utils.h:

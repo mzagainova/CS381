@@ -99,93 +99,107 @@ void InputMgr::Tick(float dt){
 void InputMgr::UpdateMouse(float dt)
 {
 	static bool left_down;
+	static bool right_down;
 
 	if(mMouse->getMouseState().buttonDown(OIS::MB_Left))
 	{
-		left_down = true;
-		Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
-		Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
-		OIS::MouseState arg = mMouse->getMouseState();
-
-		Ogre::Real offsetX = arg.X.abs / screenWidth;
-		Ogre::Real offsetY = arg.Y.abs / screenHeight;
-
-		Ogre::Ray mouseRay = engine->gfxMgr->mCamera->getCameraToViewportRay(offsetX, offsetY);
-
-		std::pair<bool, float> result = mouseRay.intersects(engine->gameMgr->mPlane);
-
-		if(result.first)
+		if(!left_down)
 		{
-			Ogre::Vector3 point = mouseRay.getPoint(result.second);
-			selectClosestEntity(point);
-		}
-	}
-	if(mMouse->getMouseState().buttonDown(OIS::MB_Right))
-	{
-		Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
-		Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
-		OIS::MouseState arg = mMouse->getMouseState();
+			left_down = true;
+			Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
+			Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
+			OIS::MouseState arg = mMouse->getMouseState();
 
-		Ogre::Real offsetX = arg.X.abs / screenWidth;
-		Ogre::Real offsetY = arg.Y.abs / screenHeight;
+			Ogre::Real offsetX = arg.X.abs / screenWidth;
+			Ogre::Real offsetY = arg.Y.abs / screenHeight;
 
-		Ogre::Ray mouseRay = engine->gfxMgr->mCamera->getCameraToViewportRay(offsetX, offsetY);
+			Ogre::Ray mouseRay = engine->gfxMgr->mCamera->getCameraToViewportRay(offsetX, offsetY);
 
-		std::pair<bool, float> result = mouseRay.intersects(engine->gameMgr->mPlane);
-		Ogre::Vector3 point = mouseRay.getPoint(result.second);
+			std::pair<bool, float> result = mouseRay.intersects(engine->gameMgr->mPlane);
 
-		if(returnClosestEntity(point))
-		{
 			if(result.first)
 			{
 				Ogre::Vector3 point = mouseRay.getPoint(result.second);
-				if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
-				{
-
-					for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
-					{
-						Intercept* temp = new Intercept(engine->entityMgr->selectedEntity[i], returnClosestEntity(point));
-						engine->entityMgr->selectedEntity[i]->aspects[2]->AddCommand(temp);
-					}
-				}
-				else
-				{
-					for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
-					{
-						Intercept* temp = new Intercept(engine->entityMgr->selectedEntity[i], returnClosestEntity(point));
-						engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(temp);
-					}
-				}
-			}
-		}
-		else
-		{
-			if(result.first)
-			{
-				Ogre::Vector3 point = mouseRay.getPoint(result.second);
-				if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
-				{
-
-					for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
-					{
-						MoveTo* temp = new MoveTo(engine->entityMgr->selectedEntity[i], point);
-						engine->entityMgr->selectedEntity[i]->aspects[2]->AddCommand(temp);
-					}
-				}
-				else
-				{
-					for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
-					{
-						MoveTo* temp = new MoveTo(engine->entityMgr->selectedEntity[i], point);
-						engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(temp);
-					}
-				}
+				selectClosestEntity(point);
 			}
 		}
 	}
 	else
 	{
 		left_down = false;
+	}
+
+	if(mMouse->getMouseState().buttonDown(OIS::MB_Right))
+	{
+		if(!right_down)
+		{
+			right_down = true;
+			Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
+			Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
+			OIS::MouseState arg = mMouse->getMouseState();
+
+			Ogre::Real offsetX = arg.X.abs / screenWidth;
+			Ogre::Real offsetY = arg.Y.abs / screenHeight;
+
+			Ogre::Ray mouseRay = engine->gfxMgr->mCamera->getCameraToViewportRay(offsetX, offsetY);
+
+			std::pair<bool, float> result = mouseRay.intersects(engine->gameMgr->mPlane);
+			Ogre::Vector3 point = mouseRay.getPoint(result.second);
+
+			if(returnClosestEntity(point))
+			{
+				if(result.first)
+				{
+					Ogre::Vector3 point = mouseRay.getPoint(result.second);
+					if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+					{
+
+						for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+						{
+							Intercept* temp = new Intercept(engine->entityMgr->selectedEntity[i], returnClosestEntity(point));
+							engine->entityMgr->selectedEntity[i]->aspects[2]->AddCommand(temp);
+						}
+					}
+					else
+					{
+						for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+						{
+							Intercept* temp = new Intercept(engine->entityMgr->selectedEntity[i], returnClosestEntity(point));
+							engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(temp);
+						}
+					}
+				}
+			}
+			else
+			{
+				if(result.first)
+				{
+					Ogre::Vector3 point = mouseRay.getPoint(result.second);
+					if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+					{
+
+						for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+						{
+							MoveTo* temp = new MoveTo(engine->entityMgr->selectedEntity[i], point);
+							engine->entityMgr->selectedEntity[i]->aspects[2]->AddCommand(temp);
+						}
+					}
+					else
+					{
+						for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+						{
+							MoveTo* temp = new MoveTo(engine->entityMgr->selectedEntity[i], point);
+							engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(temp);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	else if(right_down)
+	{
+		right_down = false;
 	}
 
 }
@@ -225,8 +239,8 @@ void InputMgr::selectClosestEntity(Ogre::Vector3 location)
 Entity381* InputMgr::returnClosestEntity(Ogre::Vector3 location)
 {
 
-	float maxDistance = 1000;
-	Entity381* closest;
+	float maxDistance = 100;
+	Entity381* closest = NULL;
 	for(size_t i = 0; i < engine->entityMgr->entities.size(); i++)
 	{
 		if(location.distance(engine->entityMgr->entities[i]->position) < maxDistance)

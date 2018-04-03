@@ -33,6 +33,7 @@ public:
 
 	Entity381* entity;
 	COMMAND_TYPE commandType;
+	float MOVE_DISTANCE_THRESHOLD;
 
 };
 
@@ -40,14 +41,13 @@ class MoveTo: public Command {
 
 public:
 	MoveTo(Entity381* ent, Ogre::Vector3 location);
-	~MoveTo();
+	virtual ~MoveTo();
 
-	void init();
-	void tick(float dt);
-	bool done();
+	virtual void init();
+	virtual void tick(float dt);
+	virtual bool done();
 
 	Ogre::Vector3 targetLocation;
-	float MOVE_DISTANCE_THRESHOLD;
 
 };
 
@@ -55,14 +55,13 @@ class Intercept: public Command {
 
 public:
 	Intercept(Entity381* ent, Entity381* targetEnt);
-	~Intercept();
+	virtual ~Intercept();
 
-	void init();
-	void tick(float dt);
-	bool done();
+	virtual void init();
+	virtual void tick(float dt);
+	virtual bool done();
 
 	Ogre::Vector3 targetLocation;
-	float MOVE_DISTANCE_THRESHOLD;
 	Ogre::Vector3 predictedLocation;
 	Ogre::Vector3 diff, relVel, t;
 	Entity381 *targetEntity;
