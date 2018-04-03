@@ -24,11 +24,12 @@ void Aspect::Tick(float dt){
 
 void Aspect::SetCommand(Command *c)
 {
+	std::cout << "wrong set command" << std::endl;
 
 }
 void Aspect::AddCommand(Command *c)
 {
-
+	std::cout << "wrong add command" << std::endl;
 }
 
 Renderable::Renderable(Entity381* ent):Aspect(ent){

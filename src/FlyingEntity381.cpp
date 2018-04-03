@@ -7,6 +7,8 @@
 
 #include <Physics3D.h>
 #include "FlyingEntity381.h"
+#include "Aspect.h"
+#include "UnitAI.h"
 
 FlyingEntity381::FlyingEntity381(Engine *engine, Ogre::Vector3 pos, int ident):
 	Entity381(engine, "banshee.mesh", pos, ident) {
@@ -19,8 +21,10 @@ FlyingEntity381::FlyingEntity381(Engine *engine, Ogre::Vector3 pos, int ident):
 	aspects.clear();
 	Physics3D * phx = new Physics3D(this);
 	Renderable *renderable = new Renderable(this);
+	UnitAI *unitai = new UnitAI;
 	aspects.push_back((Aspect *) phx);
 	aspects.push_back((Aspect *) renderable);
+	aspects.push_back(unitai);
 }
 
 FlyingEntity381::~FlyingEntity381() {

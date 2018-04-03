@@ -124,15 +124,16 @@ src/GfxMgr.o: ../src/GfxMgr.cpp /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgreRenderWindow.h \
  /usr/local/include/OGRE/OgreConfigFile.h \
  /usr/local/include/OGRE/OgreException.h \
- /home/kc/git-repos/CS381/inc/Engine.h \
- /home/kc/git-repos/CS381/inc/GfxMgr.h /usr/local/include/OGRE/OgreRoot.h \
+ /home/kurtisr/git-repos/CS381/inc/Engine.h \
+ /home/kurtisr/git-repos/CS381/inc/GfxMgr.h \
+ /usr/local/include/OGRE/OgreRoot.h \
  /usr/local/include/OGRE/OgreSceneManagerEnumerator.h \
  /usr/local/include/OGRE/OgreSceneManager.h \
  /usr/local/include/OGRE/OgreLodStrategyManager.h \
  /usr/local/include/OGRE/OgreLodStrategy.h \
  /usr/local/include/OGRE/OgreWorkQueue.h \
  /usr/local/include/OGRE/OgreWindowEventUtilities.h \
- /home/kc/git-repos/CS381/inc/Mgr.h
+ /home/kurtisr/git-repos/CS381/inc/Mgr.h
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -390,9 +391,9 @@ src/GfxMgr.o: ../src/GfxMgr.cpp /usr/local/include/OGRE/OgreEntity.h \
 
 /usr/local/include/OGRE/OgreException.h:
 
-/home/kc/git-repos/CS381/inc/Engine.h:
+/home/kurtisr/git-repos/CS381/inc/Engine.h:
 
-/home/kc/git-repos/CS381/inc/GfxMgr.h:
+/home/kurtisr/git-repos/CS381/inc/GfxMgr.h:
 
 /usr/local/include/OGRE/OgreRoot.h:
 
@@ -408,4 +409,4 @@ src/GfxMgr.o: ../src/GfxMgr.cpp /usr/local/include/OGRE/OgreEntity.h \
 
 /usr/local/include/OGRE/OgreWindowEventUtilities.h:
 
-/home/kc/git-repos/CS381/inc/Mgr.h:
+/home/kurtisr/git-repos/CS381/inc/Mgr.h:

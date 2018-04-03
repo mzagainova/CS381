@@ -40,7 +40,8 @@ Entity381::Entity381(Engine *engine, std::string meshfname, Ogre::Vector3 pos, i
 	Renderable * renderable = new Renderable(this);
 	aspects.push_back((Aspect*)renderable);
 
-	aspects.push_back(new UnitAI);
+	UnitAI* unitai = new UnitAI;
+	aspects.push_back(unitai);
 
 	this->acceleration = 0;
 	this->desiredHeading = this->heading = 0;

@@ -36,6 +36,7 @@ MoveTo::MoveTo(Entity381* ent, Ogre::Vector3 location)
 {
 	targetLocation = location;
 	entity = ent;
+	targetLocation.y = entity->position.y;
 	MOVE_DISTANCE_THRESHOLD = targetLocation.squaredDistance(entity->position);
 	init();
 }
@@ -46,23 +47,29 @@ MoveTo::~MoveTo(){
 
 void MoveTo::init(){
 	Ogre::Vector3 difference = targetLocation - entity->position;
-	Ogre::Radian temp = Ogre::Math::ATan2(difference.y, difference.x) * 180/ 3.1415926;
-	entity->desiredHeading = temp.valueRadians();
+	Ogre::Radian temp = Ogre::Math::ATan2(difference.z, difference.x) ;
+	entity->desiredHeading = temp.valueDegrees();
 	entity->desiredSpeed = entity->maxSpeed;
 }
 
 // move currently selected ent to location
 void MoveTo::tick(float dt){
-	MOVE_DISTANCE_THRESHOLD = targetLocation.squaredDistance(entity->position);
 
-	if(MOVE_DISTANCE_THRESHOLD < 100)
+	Ogre::Vector3 difference = targetLocation - entity->position;
+	Ogre::Radian temp = Ogre::Math::ATan2(difference.z, difference.x) ;
+	entity->desiredHeading = temp.valueDegrees();
+	MOVE_DISTANCE_THRESHOLD = difference.squaredLength();
+
+	std:: cout << MOVE_DISTANCE_THRESHOLD << std::endl;
+
+	if(MOVE_DISTANCE_THRESHOLD < 300)
 	{
 		entity->desiredSpeed = 0;
 	}
 }
 
 bool MoveTo::done(){
-	if(MOVE_DISTANCE_THRESHOLD < 10)
+	if(MOVE_DISTANCE_THRESHOLD < 300)
 	{
 		return true;
 	}

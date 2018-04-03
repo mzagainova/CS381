@@ -17,11 +17,11 @@ public:
 
 	void Tick(float dt);
 
-	void SetCommand(Command *c);
-	void AddCommand(Command *c);
+	virtual void SetCommand(Command *c);
+	virtual void AddCommand(Command *c);
 
 	Entity381* ent;
-	std::list<Command*> commands;
+	std::vector<Command*> commands;
 };
 
 

@@ -1,3 +1,3 @@
-src/main.o: ../src/main.cpp /home/kc/git-repos/CS381/inc/Engine.h
+src/main.o: ../src/main.cpp /home/kurtisr/git-repos/CS381/inc/Engine.h
 
-/home/kc/git-repos/CS381/inc/Engine.h:
+/home/kurtisr/git-repos/CS381/inc/Engine.h:

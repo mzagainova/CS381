@@ -46,7 +46,7 @@ void InputMgr::Init(){
 	  #elif defined OIS_LINUX_PLATFORM
 	  	  pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
 	  	  pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
-	  	  pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
+	  	  //pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
 	  	  pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
 	  #endif
 	  mInputMgr = OIS::InputManager::createInputSystem(pl);
@@ -141,16 +141,16 @@ void InputMgr::UpdateMouse(float dt)
 
 				for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
 				{
-					MoveTo temp(engine->entityMgr->selectedEntity[i], point);
-					engine->entityMgr->selectedEntity[i]->aspects[2]->AddCommand(&temp);
+					MoveTo* temp = new MoveTo(engine->entityMgr->selectedEntity[i], point);
+					engine->entityMgr->selectedEntity[i]->aspects[2]->AddCommand(temp);
 				}
 			}
 			else
 			{
 				for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
 				{
-					MoveTo temp(engine->entityMgr->selectedEntity[i], point);
-					engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(&temp);
+					MoveTo* temp = new MoveTo(engine->entityMgr->selectedEntity[i], point);
+					engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(temp);
 				}
 			}
 		}
@@ -170,13 +170,10 @@ void InputMgr::selectClosestEntity(Ogre::Vector3 location)
 	Entity381* closest;
 	for(size_t i = 0; i < engine->entityMgr->entities.size(); i++)
 	{
-		Ogre::LogManager::getSingletonPtr()->logMessage("For loop");
 		if(location.distance(engine->entityMgr->entities[i]->position) < maxDistance)
 		{
-			Ogre::LogManager::getSingletonPtr()->logMessage("Inside If statement");
 			maxDistance = location.distance(engine->entityMgr->entities[i]->position);
 			closest = engine->entityMgr->entities[i];
-			Ogre::LogManager::getSingletonPtr()->logMessage("after if statement shit");
 		}
 	}
 	if(closest)
