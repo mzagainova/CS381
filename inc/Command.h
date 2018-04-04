@@ -68,6 +68,21 @@ public:
 
 };
 
+class Follow: public Command {
+
+public:
+	Follow(Entity381* ent, Entity381* target);
+	virtual ~Follow();
+
+	virtual void init();
+	virtual void tick(float dt);
+	virtual bool done();
+
+	Ogre::Vector3 targetLocation;
+	Entity381* targetEnt;
+
+};
+
 
 
 #endif /* COMMAND_H_ */

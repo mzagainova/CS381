@@ -5,6 +5,7 @@
  *      Author: mzagainova
  */
 #include <Command.h>
+#include "Utils.h"
 
 Command::Command()
 {
@@ -59,10 +60,11 @@ void MoveTo::tick(float dt){
 	Ogre::Vector3 difference = targetLocation - entity->position;
 	Ogre::Radian temp = Ogre::Math::ATan2(-difference.z, difference.x) ;
 	entity->desiredHeading = temp.valueDegrees();
-	MOVE_DISTANCE_THRESHOLD = difference.squaredLength();
-	std::cout << temp.valueDegrees() << std::endl;
+	entity->desiredHeading = FixAngle(entity->desiredHeading);
 
-	if(MOVE_DISTANCE_THRESHOLD < 3000)
+	MOVE_DISTANCE_THRESHOLD = difference.squaredLength();
+
+	if(MOVE_DISTANCE_THRESHOLD < pow(pow(entity->maxSpeed, 2)/(2*entity->acceleration), 2))
 	{
 		entity->desiredSpeed = 0;
 	}
@@ -70,7 +72,7 @@ void MoveTo::tick(float dt){
 
 bool MoveTo::done(){
 
-	if(MOVE_DISTANCE_THRESHOLD < 3000)
+	if(MOVE_DISTANCE_THRESHOLD < pow(pow(entity->maxSpeed, 2)/(2*entity->acceleration), 2))
 	{
 		return true;
 	}
@@ -124,3 +126,47 @@ bool Intercept::done(){
 	return false;
 }
 
+Follow::Follow(Entity381* ent,  Entity381* target)
+{
+	targetLocation = target->position;
+	entity = ent;
+	targetEnt = target;
+	targetLocation.y = entity->position.y;
+	MOVE_DISTANCE_THRESHOLD = targetLocation.squaredDistance(entity->position);
+	entity->desiredSpeed = entity->maxSpeed;
+
+	init();
+}
+
+Follow::~Follow()
+{
+
+}
+
+void Follow::init(){
+
+}
+
+// move currently selected ent to location
+void Follow::tick(float dt){
+	targetLocation = targetEnt->position;
+	Ogre::Vector3 difference = targetLocation - entity->position;
+	Ogre::Radian temp = Ogre::Math::ATan2(-difference.z, difference.x) ;
+	entity->desiredHeading = temp.valueDegrees();
+	entity->desiredHeading = FixAngle(entity->desiredHeading);
+	MOVE_DISTANCE_THRESHOLD = difference.squaredLength();
+
+	if(MOVE_DISTANCE_THRESHOLD < pow(pow(entity->maxSpeed, 2)/(2*entity->acceleration), 2))
+	{
+		entity->desiredSpeed = 0;
+	}
+	else
+	{
+		entity->desiredSpeed = entity->maxSpeed;
+	}
+}
+
+bool Follow::done(){
+
+	return false;
+}

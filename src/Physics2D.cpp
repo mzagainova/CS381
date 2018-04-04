@@ -53,6 +53,10 @@ void Physics2D::Tick(float dt){
 	}
 	entity->heading = FixAngle(entity->heading);
 
+	std::cout << "entity heading       : "  << entity->heading << std::endl;
+	std::cout << "entity desiredheading: "  << entity->desiredHeading << std::endl;
+
+
 
 	//Now do the trig
 	entity->velocity.y = 0.0; // just to be safe, we do not want ships in the air.

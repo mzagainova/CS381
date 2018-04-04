@@ -145,29 +145,43 @@ void InputMgr::UpdateMouse(float dt)
 
 			std::pair<bool, float> result = mouseRay.intersects(engine->gameMgr->mPlane);
 			Ogre::Vector3 point = mouseRay.getPoint(result.second);
-
-			if(returnClosestEntity(point))
+			Entity381* closest = returnClosestEntity(point);
+			if(closest)
 			{
+
 				if(result.first)
 				{
 					Ogre::Vector3 point = mouseRay.getPoint(result.second);
-					if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+					if(mKeyboard->isKeyDown(OIS::KC_RSHIFT))
 					{
-
 						for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
 						{
-							Intercept* temp = new Intercept(engine->entityMgr->selectedEntity[i], returnClosestEntity(point));
-							engine->entityMgr->selectedEntity[i]->aspects[2]->AddCommand(temp);
+							Follow* temp = new Follow(engine->entityMgr->selectedEntity[i], closest);
+							engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(temp);
 						}
 					}
 					else
 					{
-						for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+							if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
 						{
-							Intercept* temp = new Intercept(engine->entityMgr->selectedEntity[i], returnClosestEntity(point));
-							engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(temp);
+
+							for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+							{
+								Intercept* temp = new Intercept(engine->entityMgr->selectedEntity[i], returnClosestEntity(point));
+								engine->entityMgr->selectedEntity[i]->aspects[2]->AddCommand(temp);
+							}
+						}
+						else
+						{
+							for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i ++)
+							{
+								Intercept* temp = new Intercept(engine->entityMgr->selectedEntity[i], returnClosestEntity(point));
+								engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(temp);
+							}
 						}
 					}
+
+
 				}
 			}
 			else
@@ -175,6 +189,7 @@ void InputMgr::UpdateMouse(float dt)
 				if(result.first)
 				{
 					Ogre::Vector3 point = mouseRay.getPoint(result.second);
+
 					if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
 					{
 
@@ -192,6 +207,8 @@ void InputMgr::UpdateMouse(float dt)
 							engine->entityMgr->selectedEntity[i]->aspects[2]->SetCommand(temp);
 						}
 					}
+
+
 				}
 			}
 		}
