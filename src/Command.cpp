@@ -79,12 +79,10 @@ bool MoveTo::done(){
 	return false;
 }
 
-
 Intercept::Intercept(Entity381* ent, Entity381* targetEnt){
 	entity = ent;
 	targetEntity = targetEnt;
-	diff = targetEntity->position - entity->position;
-	relVel = targetEntity->speed - entity->speed;
+	entity->desiredSpeed = entity->maxSpeed;
 
 	init();
 }
@@ -94,79 +92,31 @@ Intercept::~Intercept(){
 }
 
 void Intercept::init(){
-	Ogre::Radian temp = Ogre::Math::ATan2(diff.z, diff.x) ;
-	entity->desiredHeading = temp.valueDegrees();
-	entity->desiredSpeed = entity->maxSpeed;
-	MOVE_DISTANCE_THRESHOLD = diff.squaredLength();
 
-	t = diff / relVel;
 }
 
 void Intercept::tick(float dt){
-
-	predictedLocation = targetEntity->position + targetEntity->speed * t;
+	diff = targetEntity->position - entity->position;
+	relVel = targetEntity->velocity - entity->velocity;
+	t = (float)diff.length() / (float)relVel.length();
+	predictedLocation = targetEntity->position + targetEntity->velocity * dt *t;
 
 	Ogre::Vector3 difference = predictedLocation - entity->position;
-	Ogre::Radian temp = Ogre::Math::ATan2(difference.z, difference.x) ;
+	Ogre::Radian temp = Ogre::Math::ATan2(-difference.z, difference.x) ;
 	entity->desiredHeading = temp.valueDegrees();
 
-	MOVE_DISTANCE_THRESHOLD = predictedLocation.squaredDistance(entity->position);
+	MOVE_DISTANCE_THRESHOLD = difference.squaredLength();
 
-	if(MOVE_DISTANCE_THRESHOLD < 3000)
+	if(MOVE_DISTANCE_THRESHOLD < 1000)
 	{
 		entity->desiredSpeed = 0;
 	}
 }
 
 bool Intercept::done(){
-	if(MOVE_DISTANCE_THRESHOLD < 3000)
+	if(MOVE_DISTANCE_THRESHOLD < 1000)
 	{
 		return true;
 	}
-	return false;
-}
-
-Follow::Follow(Entity381* ent,  Entity381* target)
-{
-	targetLocation = target->position;
-	entity = ent;
-	targetEnt = target;
-	targetLocation.y = entity->position.y;
-	MOVE_DISTANCE_THRESHOLD = targetLocation.squaredDistance(entity->position);
-	entity->desiredSpeed = entity->maxSpeed;
-
-	init();
-}
-
-Follow::~Follow()
-{
-
-}
-
-void Follow::init(){
-
-}
-
-// move currently selected ent to location
-void Follow::tick(float dt){
-	targetLocation = targetEnt->position;
-	Ogre::Vector3 difference = targetLocation - entity->position;
-	Ogre::Radian temp = Ogre::Math::ATan2(-difference.z, difference.x) ;
-	entity->desiredHeading = temp.valueDegrees();
-	entity->desiredHeading = FixAngle(entity->desiredHeading);
-	MOVE_DISTANCE_THRESHOLD = difference.squaredLength();
-
-	if(MOVE_DISTANCE_THRESHOLD < pow(pow(entity->maxSpeed, 2)/(2*entity->acceleration), 2))
-	{
-		entity->desiredSpeed = 0;
-	}
-	else
-	{
-		entity->desiredSpeed = entity->maxSpeed;
-	}
-}
-
-bool Follow::done(){
-
 	return false;
 }
