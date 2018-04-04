@@ -60,3 +60,70 @@ void Entity381::Tick(float dt){
 		aspects[i]->Tick(dt);
 	}
 }
+
+
+//-------------------------------------------------------------------------------------------------------------------------------
+DDG51::DDG51(Engine *engine, std::string meshfname, Ogre::Vector3 pos, int ident):
+		Entity381(engine, meshfname, pos, ident){
+	this->minSpeed = 0;
+	this->maxSpeed = 16.0f;//meters per second...
+	this->acceleration = 5.0f; // fast
+	this->turnRate = 20.0f; //4 degrees per second
+	std::cout << "Created: " << this->name << std::endl;
+}
+
+DDG51::~DDG51(){
+
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------
+Carrier::Carrier(Engine *engine, std::string meshfname, Ogre::Vector3 pos, int ident):
+		Entity381(engine, meshfname, pos, ident){
+	this->minSpeed = 0;
+	this->maxSpeed = 20.0f;//meters per second...
+	this->acceleration = 1.0f; // slow
+	this->turnRate = 10.0f; //2 degrees per second
+}
+
+Carrier::~Carrier(){
+
+}
+//-------------------------------------------------------------------------------------------------------------------------------
+
+SpeedBoat::SpeedBoat(Engine *engine, std::string meshfname, Ogre::Vector3 pos, int ident):
+		Entity381(engine, meshfname, pos, ident){
+	this->minSpeed = 0;
+	this->maxSpeed = 30.0f;//meters per second...
+	this->acceleration = 5.0f; // slow
+	this->turnRate = 30.0f; //2 degrees per second
+}
+
+SpeedBoat::~SpeedBoat(){
+
+}
+//-------------------------------------------------------------------------------------------------------------------------------
+
+Frigate::Frigate(Engine *engine, std::string meshfname, Ogre::Vector3 pos, int ident):
+		Entity381(engine, meshfname, pos, ident){
+	this->minSpeed = 0;
+	this->maxSpeed = 15.0f;//meters per second...
+	this->acceleration = 5.0f; // slow
+	this->turnRate = 20.0f; //2 degrees per second
+}
+
+Frigate::~Frigate(){
+
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------
+Alien::Alien(Engine *engine, std::string meshfname, Ogre::Vector3 pos, int ident):
+		Entity381(engine, meshfname, pos, ident){
+	this->minSpeed = 0;
+	this->maxSpeed = 50.0f;//meters per second...
+	this->acceleration = 10.0f; // slow
+	this->turnRate = 40.0f; //2 degrees per second
+}
+
+Alien::~Alien(){
+
+}

@@ -28,8 +28,13 @@ public:
 protected:
 
 private:
-  void CreateEntity(std::string meshfilename, Ogre::Vector3 pos);
-  void CreateBanshee(Ogre::Vector3 pos);
+	void CreateDDG51(Ogre::Vector3 pos);
+	void CreateCarrier(Ogre::Vector3 pos);
+	void CreateSpeedBoat(Ogre::Vector3 pos);
+	void CreateFrigate(Ogre::Vector3 pos);
+	void CreateAlien(Ogre::Vector3 pos);
+	void CreateEntity(std::string meshfilename, Ogre::Vector3 pos);
+	void CreateBanshee(Ogre::Vector3 pos);
 
   int count;
 

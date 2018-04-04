@@ -58,8 +58,8 @@ void GameMgr::MakeEntities(){
 		pos.x += 500;
 	}
 
-
-	/*engine->entityMgr->CreateEntityOfTypeAtPosition(DDG51Type, pos);
+	pos = Ogre::Vector3(-1000, 0, -300);
+	engine->entityMgr->CreateEntityOfTypeAtPosition(DDG51Type, pos);
 	pos.x += 500;
 	engine->entityMgr->CreateEntityOfTypeAtPosition(CarrierType, pos);
 	pos.x += 500;
@@ -67,7 +67,7 @@ void GameMgr::MakeEntities(){
 	pos.x += 500;
 	engine->entityMgr->CreateEntityOfTypeAtPosition(FrigateType, pos);
 	pos.x += 500;
-	engine->entityMgr->CreateEntityOfTypeAtPosition(AlienType, pos);*/
+	engine->entityMgr->CreateEntityOfTypeAtPosition(AlienType, pos);
 
 	engine->entityMgr->SelectNextEntity(); //sets selection
 }

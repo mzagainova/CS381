@@ -45,6 +45,41 @@ protected:
 
 };
 
+class Carrier: Entity381 {
+public:
+	Carrier(Engine *engine, std::string meshfilename, Ogre::Vector3 pos, int identity);
+	virtual ~Carrier();
+
+};
+
+class DDG51: Entity381 {
+public:
+	DDG51(Engine *engine, std::string meshfilename, Ogre::Vector3 pos, int identity);
+	virtual ~DDG51();
+
+};
+
+class SpeedBoat: Entity381 {
+public:
+	SpeedBoat(Engine *engine, std::string meshfilename, Ogre::Vector3 pos, int identity);
+	virtual ~SpeedBoat();
+
+};
+
+class Frigate: Entity381 {
+public:
+	Frigate(Engine *engine, std::string meshfilename, Ogre::Vector3 pos, int identity);
+	virtual ~Frigate();
+
+};
+
+class Alien: Entity381 {
+public:
+	Alien(Engine *engine, std::string meshfilename, Ogre::Vector3 pos, int identity);
+	virtual ~Alien();
+
+};
+
 
 
 #endif // #ifndef __Entity381_h_
