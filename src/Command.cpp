@@ -60,7 +60,6 @@ void MoveTo::tick(float dt){
 	Ogre::Vector3 difference = targetLocation - entity->position;
 	Ogre::Radian temp = Ogre::Math::ATan2(-difference.z, difference.x) ;
 	entity->desiredHeading = temp.valueDegrees();
-	std::cout << entity->desiredHeading << std::endl;
 	MOVE_DISTANCE_THRESHOLD = difference.squaredLength();
 
 	if(MOVE_DISTANCE_THRESHOLD < 3000)
