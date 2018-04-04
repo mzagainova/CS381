@@ -17,7 +17,6 @@ void UnitAI::Tick(float dt){
 	if(!commands.empty())
 	{
 		commands[0]->tick(dt);
-		std::cout << commands.size() << std::endl;
 
 		if(commands[0]->done())
 		{
@@ -28,7 +27,6 @@ void UnitAI::Tick(float dt){
 }
 
 void UnitAI::SetCommand(Command *c){
-	std::cout << "appropriate set command" << std::endl;
 	for(unsigned int i = 0; i < commands.size(); i ++)
 	{
 		if(commands[i])
@@ -41,7 +39,6 @@ void UnitAI::SetCommand(Command *c){
 }
 
 void UnitAI::AddCommand(Command *c){
-	std::cout << "appropriate addcommand" << std::endl;
 
 	commands.push_back(c);
 }

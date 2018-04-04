@@ -89,7 +89,7 @@ void EntityMgr::Tick(float dt){
 	for(int i = 0; i < (int)selectedEntity.size(); i++){
 		selectedEntity[i]->isSelected = true;
 	}
-	for(int i = 0; i < count; i++){
+	for(int i = 0; i < entities.size(); i++){
 		entities[i]->Tick(dt);
 	}
 }

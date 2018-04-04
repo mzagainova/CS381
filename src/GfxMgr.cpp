@@ -78,8 +78,8 @@ void GfxMgr::Init(){
   mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC);
 
   mCamera = mSceneMgr->createCamera("MainCam");
-  mCamera->setPosition(0, 1000, 0);
-  mCamera->lookAt(0, 0, -300);
+  mCamera->setPosition(0, 1500, 200);
+  mCamera->lookAt(0, 0, 0);
   mCamera->setNearClipDistance(5);
 
   Ogre::Viewport* vp = mWindow->addViewport(mCamera);

@@ -226,10 +226,9 @@ void InputMgr::selectClosestEntity(Ogre::Vector3 location)
 		}
 		else
 		{
-			for(size_t i = 0; i < engine->entityMgr->selectedEntity.size(); i++)
-			{
-				engine->entityMgr->selectedEntity.pop_back();
-			}
+
+			engine->entityMgr->selectedEntity.clear();
+
 			engine->entityMgr->selectedEntity.push_back(closest);
 		}
 
